@@ -1,2 +1,0 @@
-# sRonanSmith.github.io
-website
