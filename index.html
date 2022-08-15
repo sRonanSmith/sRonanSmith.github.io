@@ -13,9 +13,9 @@
 
         </div>
         <div>
-            <script> 
+            <script src="/scripts/game.js"> 
             //starting application command draw a canvas and append to render it into the page
-            let app = new PIXI.Application ({ width: 640, height :360 });
+            let app = new PIXI.Application ({ width: 1000, height :1000 });
             document.body.appendChild(app.view);
 
             //load sprite from example to the Application stage
@@ -27,7 +27,7 @@
             
             app.ticker.add((delta) => {
                 elapsed += delta;
-                sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
+                //sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
             });
             </script>
         </div>
