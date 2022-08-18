@@ -2,25 +2,19 @@
 <html>
     <head>
         <title>Sams git Website</title>
-  
+        <link rel="stylesheet" href="style.css">
         <script src="/scripts/src/pixi.js"></script>
     </head>
     <body>
         <div>
-            <p>"single first div"</p>
-        </div>
-        <div>
-
-        </div>
-        <div>
-            <script> 
+            <script id="game"> 
             //starting application command draw a canvas and append to render it into the page
-            let app = new PIXI.Application ({ width: 2000, height :1000 });
+            let app = new PIXI.Application ({resizeTo: window});
             document.body.appendChild(app.view);
 
             //load sprite from example to the Application stage
             let sprite = PIXI.Sprite.from('sample.png')
-            app.stage.addChild(sprite);
+            //app.stage.addChild(sprite);
             
             //adding time pause and motion to move sprite
             let elapsed = 0.0;
@@ -29,6 +23,7 @@
                 elapsed += delta;
                 sprite.x = 114
                 //sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
+                //sprite.y = 50.0 + Math.sin(elapsed/50.0) * 100.0;
             });
             </script>
         </div>
