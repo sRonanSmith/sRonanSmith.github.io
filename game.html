@@ -4,7 +4,6 @@
         <title>Sams RPG Engine</title>
         <link rel="stylesheet" href="style.css">
         <script src="/scripts/src/pixi.js"></script>
-        <script src="/scripts/src/pixijs-grid.js"></script>
     </head>
     <body>
         <div>
@@ -16,45 +15,54 @@
             //first container for the game, addChild puts the container on the application canvas
             const container = new PIXI.Container();
             app.stage.addChild(container);
-            // let grid = new PixiJSGrid(25, 0xDE3249);
-                // shortening important values for resizing
-                var w = window.innerWidth;
-                var h = window.innerHeight
-                const graphics = new PIXI.Graphics();
-
-
-                // Draw the line (endPoint should be relative to myGraph's position)
                 
-                container.addChild(graphics);
-            for (let i = 0; i < (h/64); i++) {
-                graphics.lineStyle(2, 0xffffff).moveTo(i*64, 0).lineTo(i*64, h);
-                graphics.lineStyle(2, 0xffffff).moveTo(0, i*64).lineTo(w, i*64);    
+            const graphics = new PIXI.Graphics();
+            container.addChild(graphics);
+            graphics.position.set(0,0);
+
+                //variable for number of rows to render
+                var w = 3
+                //how many columns
+                var h = 3
+                // Draw a graph for game board
+                
+            for (let i = 0; i < (h+1); i++) {
+                graphics.lineStyle(2, 0xffffff).moveTo(0, i*64).lineTo( w*64, i*64);    
             }
-            
-            //smoothing resize
-           
+            for (let j = 0; j < (w+1); j++) {
+                graphics.lineStyle(1, 0xffffff).moveTo(j*64, 0).lineTo(j*64, h*64);
+            }
+            //x tile coordinate position
+            var x = 4
+            var w = app.screen.width
+            //y tile coordinate
+            var y = 3
+            var h = app.screen.height
             // Resize function, used as graphics placement and rerendering listener for resizing window
-            function resize() {
+            function view() {
             // Resize the renderer
             app.renderer.resize(window.innerWidth, window.innerHeight);
+
+            var xpos = (app.screen.width/2+32)-x*64
+            var ypos = (app.screen.height/2+32)-y*64
 
             // You can use the 'screen' property as the renderer visible
             // area, this is more useful than view.width/hight because
             // it handles resolution
-            // graphics.position.set(app.screen.width/2, app.screen.height/2);
-            graphics.position.set ( 0, 0);
+            container.position.set(xpos, ypos);
+            // graphics.position.set ( 0, 0);
 
 
         }
-            resize();
-            window.addEventListener('resize', resize);
+            view();
+            window.addEventListener('resize', view);
             
             
             
             
             //load sprite from example to the Application stage
-            // let sprite = PIXI.Sprite.from('sample.png')
-            // //app.stage.addChild(sprite);
+            let sprite = PIXI.Sprite.from('/assets/scrap.png')
+            container.addChild(sprite);
             
             // //adding time pause and motion to move sprite
             // let elapsed = 0.0;
