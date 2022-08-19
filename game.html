@@ -21,9 +21,9 @@
             graphics.position.set(0,0);
 
                 //variable for number of rows to render
-                var w = 3
+                var w = 6
                 //how many columns
-                var h = 3
+                var h = 6
                 // Draw a graph for game board
                 
             for (let i = 0; i < (h+1); i++) {
@@ -61,9 +61,12 @@
             
             
             //load sprite from example to the Application stage
-            let sprite = PIXI.Sprite.from('/assets/scrap.png')
-            container.addChild(sprite);
-            
+            let weldon = PIXI.Sprite.from('/assets/pxArt.png')
+            container.addChild(weldon);
+
+            let buta = PIXI.Sprite.from('/assets/Buta.png')
+            container.addChild(buta);
+            buta.position.set(64,0);
             // //adding time pause and motion to move sprite
             // let elapsed = 0.0;
             
