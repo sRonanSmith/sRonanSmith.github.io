@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sams RPG Engine</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="/scripts/src/pixi.js"></script>
+        <script src="/scripts/src/pixijs-grid.js"></script>
+    </head>
+    <body>
+        <div>
+            <script id="game"> 
+            //starting application command draw a canvas and append to render it into the page
+            const app = new PIXI.Application ({
+                resizeto:window,
+            });
+            document.body.appendChild(app.view);
+
+            //first container for the game, addChild puts the container on the application canvas
+            const container = new PIXI.Container();
+            app.stage.addChild(container);
+            // let grid = new PixiJSGrid(25, 0xDE3249);
+                // shortening important values for resizing
+                var w = window.innerWidth;
+                var h = window.innerHeight;
+                const graphics = new PIXI.Graphics();
+                // Move it to the beginning of the line
+                graphics.position.set(app.screen.width/2, app.screen.height/2);
+
+                // Draw the line (endPoint should be relative to myGraph's position)
+                
+                // graphics.beginFill(0xDE3249);
+                // graphics.drawRect( w/2, 50, 100, 100);
+                // graphics.endFill();
+                container.addChild(graphics);
+            for (let i = 0; i < (w/128); i++) {
+                graphics.lineStyle(2, 0xffffff).moveTo(i*64+32, 0).lineTo(i*64+32, h);
+                graphics.lineStyle(2, 0xffffff).moveTo(-(i*64+32), 0).lineTo(-(i*64+32), h);    
+            }
+            
+            //smoothing resize
+            window.addEventListener('resize', resize);
+            // Resize function window
+            function resize() {
+            // Resize the renderer
+            app.renderer.resize(window.innerWidth, window.innerHeight);
+
+            // You can use the 'screen' property as the renderer visible
+            // area, this is more useful than view.width/height because
+            // it handles resolution
+            graphics.position.set(app.screen.width/2, app.screen.height/2);
+            }
+            resize();
+            //load sprite from example to the Application stage
+            let sprite = PIXI.Sprite.from('sample.png')
+            //app.stage.addChild(sprite);
+            
+            //adding time pause and motion to move sprite
+            let elapsed = 0.0;
+            
+            app.ticker.add((delta) => {
+                elapsed += delta;
+                sprite.x = 114
+                //sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
+                //sprite.y = 50.0 + Math.sin(elapsed/50.0) * 100.0;
+            });
+            </script>
+        </div>
+    </body>
+</html>
