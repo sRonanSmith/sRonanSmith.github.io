@@ -4,5 +4,5 @@
     box-sizing:border-box;
 }
 body {
-    overflow-y: hidden; /* Hide vertical scrollbar */
+    overflow: hidden; /* Hide vertical scrollbar */
 }
