@@ -12,18 +12,19 @@
             const app = new PIXI.Application ();
             document.body.appendChild(app.view);
 
-            //first container for the game, addChild puts the container on the application canvas
+            //first container for the game, addChild puts the container on the web application canvas
             const container = new PIXI.Container();
             app.stage.addChild(container);
-                
+            
+            
             const graphics = new PIXI.Graphics();
             container.addChild(graphics);
             graphics.position.set(0,0);
 
                 //variable for number of rows to render
-                var w = 6
+                var w = 7
                 //how many columns
-                var h = 6
+                var h = 7
                 // Draw a graph for game board
                 
             for (let i = 0; i < (h+1); i++) {
@@ -32,12 +33,82 @@
             for (let j = 0; j < (w+1); j++) {
                 graphics.lineStyle(1, 0xffffff).moveTo(j*64, 0).lineTo(j*64, h*64);
             }
-            //x tile coordinate position
-            var x = 4
-            var w = app.screen.width
+
+
+           
+            
+            
+            
+            //load sprites for characters to the Application stage
+            let weldon = PIXI.Sprite.from('/assets/pxArt.png')
+            container.addChild(weldon);
+
+            let buta = PIXI.Sprite.from('/assets/Buta.png')
+            container.addChild(buta);
+            // buta.position.set(64,0);
+            // //adding time pause and motion to move sprite
+            let elapsed = 0.0;
+            
+            // app.ticker.add((delta) => {
+            //     elapsed += delta;
+            //     buta.x = 120.0 + Math.cos(elapsed/50.0) * 100.0;
+            //     //sprite.y = 50.0 + Math.sin(elapsed/50.0) * 100.0;
+            // });
+
+
+            function keyboard(value) {
+                const key = {};
+                key.value = value;
+                key.isDown = false;
+                key.isUp = true;
+                key.press = undefined;
+                key.release = undefined;
+                //The `downHandler`
+                key.downHandler = (event) => {
+                    if (event.key === key.value) {
+                    if (key.isUp && key.press) {
+                        key.press();
+                    }
+                    key.isDown = true;
+                    key.isUp = false;
+                    event.preventDefault();
+                    }
+                };
+
+                //The `upHandler`
+                key.upHandler = (event) => {
+                    if (event.key === key.value) {
+                    if (key.isDown && key.release) {
+                        key.release();
+                    }
+                    key.isDown = false;
+                    key.isUp = true;
+                    event.preventDefault();
+                    }
+                };
+
+                //Attach event listeners
+                const downListener = key.downHandler.bind(key);
+                const upListener = key.upHandler.bind(key);
+                
+                window.addEventListener("keydown", downListener, false);
+                window.addEventListener("keyup", upListener, false);
+                
+                // Detach event listeners
+                key.unsubscribe = () => {
+                    window.removeEventListener("keydown", downListener);
+                    window.removeEventListener("keyup", upListener);
+                };
+                
+                return key;
+            }
+            
+             //x tile coordinate position
+             var x = 4
+
             //y tile coordinate
-            var y = 3
-            var h = app.screen.height
+            var y = 4
+
             // Resize function, used as graphics placement and rerendering listener for resizing window
             function view() {
             // Resize the renderer
@@ -53,29 +124,17 @@
             // graphics.position.set ( 0, 0);
 
 
-        }
+            }
             view();
-            window.addEventListener('resize', view);
-            
-            
-            
-            
-            //load sprite from example to the Application stage
-            let weldon = PIXI.Sprite.from('/assets/pxArt.png')
-            container.addChild(weldon);
 
-            let buta = PIXI.Sprite.from('/assets/Buta.png')
-            container.addChild(buta);
-            buta.position.set(64,0);
-            // //adding time pause and motion to move sprite
-            // let elapsed = 0.0;
-            
-            // app.ticker.add((delta) => {
-            //     elapsed += delta;
-            //     sprite.x = 114
-            //     //sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
-            //     //sprite.y = 50.0 + Math.sin(elapsed/50.0) * 100.0;
-            // });
+            window.addEventListener('resize', view);
+
+
+            const viewLeft = keyboard("ArrowLeft");
+            viewLeft.press = () => {
+            //key object pressed
+            container.position.set(256,0)
+            };
             </script>
         </div>
     </body>
